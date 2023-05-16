@@ -21,7 +21,7 @@ public class HomeController : Controller
     }
     
     [HttpPost]
-    public async Task<ActionResult<User>> PostTodoItem([FromBody] User newUser)
+    public async Task<ActionResult<User>> PostUser([FromBody] User newUser)
     {
         if (ModelState.IsValid)
         {

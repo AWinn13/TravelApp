@@ -6,7 +6,7 @@ using TravelApp.Models;
 namespace TravelApp.Controllers;
 
 [ApiController]
-[Route("[controller]")]
+[Route("api/user")]
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
@@ -20,6 +20,14 @@ public class HomeController : Controller
         _context = context;
     }
     
+    [HttpGet]
+    public IEnumerable<User>Get()
+    {   
+        IEnumerable<User> Users = _context.Users.ToList();
+        return Users;
+
+    }
+
     [HttpPost]
     public async Task<ActionResult<User>> PostUser([FromBody] User newUser)
     {

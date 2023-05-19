@@ -19,13 +19,29 @@ public class HomeController : Controller
 
         _context = context;
     }
-    
+
     [HttpGet]
-    public IEnumerable<User>Get()
-    {   
+    public IEnumerable<User> Get()
+    {
         IEnumerable<User> Users = _context.Users.ToList();
         return Users;
 
+    }
+
+
+
+    [HttpGet("{id}")]
+    public async Task<ActionResult<User>> GetUser(long id)
+    {
+        
+        var oneUser = await _context.Users.FindAsync(id);
+        
+        if (oneUser == null)
+        {
+            return NotFound();
+        }
+        // Otherwise, return the item
+        return oneUser;
     }
 
     [HttpPost]

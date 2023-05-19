@@ -31,7 +31,7 @@ public class HomeController : Controller
 
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<User>> GetUser(long id)
+    public async Task<ActionResult<User>> GetOneUser(int id)
     {
         
         var oneUser = await _context.Users.FindAsync(id);

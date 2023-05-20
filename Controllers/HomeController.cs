@@ -62,4 +62,15 @@ public class HomeController : Controller
         }
     }
 
+    
+    [HttpPost("authenticate")]
+    public IActionResult Authenticate(LoginUser model)
+    {
+        var response =  _context.Users.FirstOrDefault(u => u.Email == model.UserEmail);
+
+        if (response == null)
+            return BadRequest(new { message = "Username or password is incorrect" });
+
+        return Ok(response);
+    }
 }

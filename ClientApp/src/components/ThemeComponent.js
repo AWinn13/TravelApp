@@ -1,3 +1,5 @@
+import { makeStyles } from "@mui/material";
+import { useTheme } from "@emotion/react";
 export const themeOptions = {
     palette: {
         mode: 'light',
@@ -29,8 +31,24 @@ export const themeOptions = {
                     style: {
                         fontSize: 30
                     }
+                },
+                {
+                    props :{
+                        variant: "h3"
+                    },
+                    style : {
+                        fontSize: 35
+                    }
                 }
             ]
         },
     }
 };
+
+// export const useStyles = makeStyles((theme) => ({
+
+//     yellowPaper: {
+//         backgroundColor: '#553a41'
+//     },
+
+// }));

@@ -45,7 +45,7 @@ function NavMenu() {
       <AppBar position="static">
         <Container maxWidth="xl">
           <Toolbar disableGutters sx={{display: "flex", justifyContent: "space-between"}}>
-            <Typography variant='h2' component="body2">
+            <Typography variant='h2' component="h1">
               <Link color='inherit' sx={{"&:hover": {color: "inherit"}}} underline='none' href='/'>RoamMap </Link> 
             </Typography>
             <ProfileMenu/>

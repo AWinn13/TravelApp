@@ -10,6 +10,8 @@ public class Transportation
     public bool? Flight { get; set; }
     public bool? CarRental { get; set; }
     public bool? Train { get; set; }
+    public bool? Bus { get; set; }
+    public bool? Shuttle { get; set; }
     public string? ConfirmationNumber { get; set; }
     public DateOnly StartDate { get; set; }
     public TimeOnly? StartTime { get; set; }

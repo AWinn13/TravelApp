@@ -11,13 +11,55 @@ import {
     Container
 } 
 from '@mui/material';
+import { red } from '@mui/material/colors';
+import { useState } from 'react';
+import axios from 'axios';
 
-const LoginForm = ({open, handleClose, handleSetSignIn}) => {
+const LoginForm = ({open, handleClose, handleSetSignIn, loggedUser}) => {
+    const [errors, setErrors] = useState("")
+    const [authUser, setAuthUser] = useState({
+        UserEmail: "",
+        UserPassword:""
+    })
+    const onSubmitHandler = async (e) => {
+        e.preventDefault();
+        axios.post("https://localhost:7096/api/user/authenticate",
+            { ...authUser },
+            {
+                "headers": {
+                    "Content-Type": "application/json; charset=utf-8",
+                    "Server": "Kestrel"
+                }
+            }
+        )
+            .then(res => {
+                console.log(res);
+                loggedUser(res)
+            })
+            .catch(err => {
+                if (err.response) {
+                    console.log(err.response.data)
+                    const errorResponse = err.response.data.errors;
+                    console.log(errorResponse)
+                    if (typeof errorResponse === "object") {
+                        setErrors("Username or password is incorrect");
+                        console.log("success");
+                    } else {
+                        console.error('Error:', errorResponse);
+                    }
+                } else {
+                    console.error('Error:', err);
+                }
+            }
+
+            )
+    }
     return (
         <Dialog open={open} onClose={handleClose} color='secondary'>
             <DialogTitle><Typography variant='h2' sx={{textAlign: "center"}}>Login</Typography></DialogTitle>
             <DialogContent>
-                <form action="">
+                <Typography variant='body2' color="error">{errors}</Typography>
+                <form onSubmit={onSubmitHandler}>
                     <TextField
                         autoFocus
                         margin="dense"
@@ -26,6 +68,7 @@ const LoginForm = ({open, handleClose, handleSetSignIn}) => {
                         type="email"
                         fullWidth
                         variant="standard"
+                        onChange={(e) => setAuthUser({...authUser, UserEmail: e.target.value})}
                     />
                     <TextField
                         autoFocus
@@ -35,6 +78,7 @@ const LoginForm = ({open, handleClose, handleSetSignIn}) => {
                         type="password"
                         fullWidth
                         variant="standard"
+                        onChange={(e) => setAuthUser({ ...authUser, UserPassword: e.target.value })}
                     />
                     
                     <DialogContentText mt={2} sx={{display:"flex", justifyContent: "space-between", marginTop: "10px"}}>

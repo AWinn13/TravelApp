@@ -1,11 +1,11 @@
-import {useState} from 'react';
+import { useState } from 'react';
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Fade from '@mui/material/Fade';
 import Typography from '@mui/material/Typography';
 
-export default function ProfileMenu() {
+export default function ProfileMenu({ loggedUser }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -14,6 +14,10 @@ export default function ProfileMenu() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const handleCloseLogout = () => {
+    loggedUser(false);
+    setAnchorEl(null);
+  }
 
   return (
     <div>
@@ -41,7 +45,7 @@ export default function ProfileMenu() {
         <MenuItem onClick={handleClose}>Dashboard</MenuItem>
         <MenuItem onClick={handleClose}>Upcoming Roam</MenuItem>
         <MenuItem onClick={handleClose}>Roams</MenuItem>
-        <MenuItem onClick={handleClose}>Logout</MenuItem>
+        <MenuItem onClick={handleCloseLogout}>Logout</MenuItem>
       </Menu>
     </div>
   );

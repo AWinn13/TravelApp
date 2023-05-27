@@ -6,9 +6,9 @@ namespace TravelApp.Models;
 
 public class LoginUser
 {
-    [Required]
+    [Required(ErrorMessage = "Username or password is incorrect")]
     public string UserEmail {get;set;}
 
-    [Required]
+    [Required(ErrorMessage = "Username or password is incorrect")]
     public string UserPassword {get;set;}
 }

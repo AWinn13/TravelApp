@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react';
+import { Component, useState } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -15,16 +15,26 @@ import { themeOptions } from './ThemeComponent';
 import LoginForm from './LoginForm';
 import RegForm from './RegForm';
 
-const pages = ['Products', 'Pricing', 'Blog'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
-
 function NavMenu() {
   const theme = createTheme(themeOptions);
-  const [anchorElNav, setAnchorElNav] = React.useState(null);
-  const [anchorElUser, setAnchorElUser] = React.useState(null);
 
-  const [open, setOpen] = React.useState(false);
+  const [loggedUser, setLoggedUser] = useState(false)
+  const [open, setOpen] = useState(false);
   const [signIn, setSignIn] = useState(false);
+
+  const handleLoggedUser = (res) => {
+    if (res.hasOwnProperty("data")) {
+      console.log("RESPONSE--------->", res)
+      setLoggedUser(res.data);
+      console.log("USER------------>", loggedUser);
+    }
+    else {
+      console.log("RESPONSE--------->", res)
+      setLoggedUser(res);
+      console.log("USER------------>", loggedUser);
+    }
+    handleClose();
+  }
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -44,18 +54,23 @@ function NavMenu() {
     <ThemeProvider theme={theme}>
       <AppBar position="static">
         <Container maxWidth="xl">
-          <Toolbar disableGutters sx={{display: "flex", justifyContent: "space-between"}}>
+          <Toolbar disableGutters sx={{ display: "flex", justifyContent: "space-between" }}>
             <Typography variant='h2' component="h1">
-              <Link color='inherit' sx={{"&:hover": {color: "inherit"}}} underline='none' href='/'>RoamMap </Link> 
+              <Link color='inherit' sx={{ "&:hover": { color: "inherit" } }} underline='none' href='/'>RoamMap </Link>
             </Typography>
-            <ProfileMenu/>
-            {/* <Button variant='contained' color="secondary" onClick={handleClickOpen}>
-              <Typography textAlign="center" variant='body2'>Login</Typography>
-            </Button>
-            {signIn ? 
-              <RegForm open={open} handleClose={handleClose} handleSetSignIn={handleSetSignIn}/>:
-              <LoginForm open={open} handleClose={handleClose} handleSetSignIn={handleSetSignIn}/>
-            } */}
+            {loggedUser ?
+
+              <ProfileMenu loggedUser={handleLoggedUser} />
+              :
+              <Button variant='contained' color="secondary" onClick={handleClickOpen}>
+                <Typography textAlign="center" variant='body2'>Login</Typography>
+              </Button>
+            }
+            {
+              signIn ?
+                <RegForm open={open} handleClose={handleClose} handleSetSignIn={handleSetSignIn} loggedUser={handleLoggedUser} /> :
+                <LoginForm open={open} handleClose={handleClose} handleSetSignIn={handleSetSignIn} loggedUser={handleLoggedUser} />
+            }
           </Toolbar>
         </Container>
       </AppBar>

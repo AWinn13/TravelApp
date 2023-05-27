@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Filters;
+// using Newtonsoft.Json;
 using TravelApp.Models;
 namespace TravelApp.Controllers;
 
@@ -49,6 +50,8 @@ public class HomeController : Controller
     {
         if (ModelState.IsValid)
         {
+            PasswordHasher<User> Hasher = new PasswordHasher<User>();
+            newUser.Password = Hasher.HashPassword(newUser, newUser.Password);
             _context.Users.Add(newUser);
             await _context.SaveChangesAsync();
             return CreatedAtAction(
@@ -58,7 +61,13 @@ public class HomeController : Controller
         }
         else
         {
-            return BadRequest(ModelState);
+            var errors = ModelState.Values.SelectMany(v => v.Errors)
+            .Select(e => e.ErrorMessage)
+            .ToList();
+            // Object allerrors = new Object() { "Errors":errors};
+    
+            Console.WriteLine("MODELSTATE -------->",ModelState);
+            return BadRequest(errors);
         }
     }
 
@@ -66,11 +75,26 @@ public class HomeController : Controller
     [HttpPost("authenticate")]
     public IActionResult Authenticate(LoginUser model)
     {
-        var response =  _context.Users.FirstOrDefault(u => u.Email == model.UserEmail);
+        if(ModelState.IsValid)
+        {
+            User? user =  _context.Users.FirstOrDefault(u => u.Email == model.UserEmail);
+            PasswordHasher<LoginUser> hasher = new PasswordHasher<LoginUser>();
+            var result = hasher.VerifyHashedPassword(model, user.Password, model.UserPassword);
+            if (user == null)
+                return BadRequest(new { message = "Username or password is incorrect" });
+            else if (result == 0)
+                return BadRequest(new { message = "Username or password is incorrect" });
+            return Ok(user);
+        }
+        else
+        {
+            var errors = ModelState.Values.SelectMany(v => v.Errors)
+            .Select(e => e.ErrorMessage)
+            .ToList();
+            // Object allerrors = new Object() { "Errors":errors};
 
-        if (response == null)
-            return BadRequest(new { message = "Username or password is incorrect" });
-
-        return Ok(response);
+            // Console.WriteLine("MODELSTATE -------->",ModelState);
+            return BadRequest(errors);
+        }
     }
 }

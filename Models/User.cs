@@ -9,18 +9,18 @@ public class User
     public int UserId { get; set; }
 
     [Required]
-    [MinLength(2)]
+    [MinLength(2, ErrorMessage = "Name must be longer than 2 characters")]
     public string Name { get; set; }
 
     [Required]
-    [EmailAddress]
+    [EmailAddress(ErrorMessage = "Must provide a valid email.")]
     [UniqueEmail]
     public string Email { get; set; }
 
     [Required]
     [DataType(DataType.Password)]
     [RegularExpression(@"^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$",
-     ErrorMessage = "Password must contain at least 1 letter, 1 special character, and a number")]
+     ErrorMessage = "Password must be at least 8 characters, contain at least 1 letter, 1 special character, and a number")]
     public string Password { get; set; }
 
     public DateTime CreatedAt { get; set; } = DateTime.Now;
@@ -28,7 +28,7 @@ public class User
     public DateTime UpdatedAt { get; set; } = DateTime.Now;
 
     [NotMapped]
-    [Compare("Password")]
+    [Compare("Password", ErrorMessage = "Passwords must match!")]
     public string PasswordConfirm { get; set; }
 
 

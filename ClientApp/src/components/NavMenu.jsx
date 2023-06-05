@@ -1,4 +1,4 @@
-import { Component, useState } from 'react';
+import { Component, useState, useEffect } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -22,17 +22,17 @@ function NavMenu() {
   const [open, setOpen] = useState(false);
   const [signIn, setSignIn] = useState(false);
 
+  useEffect(() => {
+    const loggedInUser = localStorage.getItem("user");
+    if (loggedInUser) {
+      // const foundUser = JSON.parse(loggedInUser);
+      setLoggedUser(loggedInUser);
+
+    }
+  }, [loggedUser]);
+
   const handleLoggedUser = (res) => {
-    if (res.hasOwnProperty("data")) {
-      console.log("RESPONSE--------->", res)
-      setLoggedUser(res.data);
-      console.log("USER------------>", loggedUser);
-    }
-    else {
-      console.log("RESPONSE--------->", res)
-      setLoggedUser(res);
-      console.log("USER------------>", loggedUser);
-    }
+    setLoggedUser(res)
     handleClose();
   }
 

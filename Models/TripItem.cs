@@ -5,6 +5,7 @@ namespace TravelApp.Models;
 
 public class TripItem 
 {
+    [Key]
     public int ItemId { get; set; }
 
     public string ItemName { get; set; }

@@ -8,4 +8,6 @@ public class MyContext : DbContext
     public MyContext(DbContextOptions options) : base(options) { }
 
     public DbSet<User> Users { get; set; }
+    public DbSet<Trip> Trips { get; set; }
+    public DbSet<TripItem> TripItems { get; set; }
 }

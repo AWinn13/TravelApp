@@ -15,6 +15,7 @@ export default function ProfileMenu({ loggedUser }) {
     setAnchorEl(null);
   };
   const handleCloseLogout = () => {
+    localStorage.clear();
     loggedUser(false);
     setAnchorEl(null);
   }

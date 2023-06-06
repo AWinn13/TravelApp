@@ -39,7 +39,8 @@ const RegForm = ({ open, handleClose, handleSetSignIn, loggedUser }) => {
         )
             .then(res => {
                 console.log(res);
-                loggedUser(res)
+                localStorage.setItem("user", res.data)
+                loggedUser(res.data)
             })
             .catch(err =>
                 {

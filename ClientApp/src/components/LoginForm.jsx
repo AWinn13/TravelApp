@@ -34,19 +34,18 @@ const LoginForm = ({open, handleClose, handleSetSignIn, loggedUser}) => {
         )
             .then(res => {
                 console.log(res);
-                loggedUser(res)
+                localStorage.setItem("user", res.data)
+                loggedUser(res.data)
             })
             .catch(err => {
                 if (err.response) {
                     console.log(err.response.data)
-                    const errorResponse = err.response.data.errors;
-                    console.log(errorResponse)
-                    if (typeof errorResponse === "object") {
-                        setErrors("Username or password is incorrect");
-                        console.log("success");
-                    } else {
-                        console.error('Error:', errorResponse);
-                    }
+                    // const errorResponse = err.response.data.errors;
+                    // console.log(errorResponse)
+                    setErrors("Username or password is incorrect");
+                    
+                        // console.error('Error:', errorResponse);
+                    
                 } else {
                     console.error('Error:', err);
                 }

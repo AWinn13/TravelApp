@@ -1,22 +1,29 @@
 import React, { Component } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import AppRoutes from './AppRoutes';
 import { Layout } from './components/Layout';
+import { Home } from "./components/Home";
+import Dashboard from "./components/MainDash";
+import RoamForm from "./components/RoamForm";
+import {themeOptions} from "./components/ThemeComponent";
 import './custom.css';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+
+const theme = createTheme(themeOptions);
 
 export default class App extends Component {
-  static displayName = App.name;
 
+  static displayName = App.name;
   render() {
     return (
-      <Layout>
-        <Routes>
-          {AppRoutes.map((route, index) => {
-            const { element, ...rest } = route;
-            return <Route key={index} {...rest} element={element} />;
-          })}
-        </Routes>
-      </Layout>
+      <ThemeProvider theme={theme}>
+        <Layout>
+          <Routes>
+            <Route exact path='/' element={<Home />} />
+            <Route path='/dashboard' element={<Dashboard />} />
+            <Route path='/dashboard/roam' element={<RoamForm />} />
+          </Routes>
+        </Layout>
+      </ThemeProvider>
     );
   }
 }

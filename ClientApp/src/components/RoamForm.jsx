@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { TextField, Grid } from '@mui/material';
 import StepOne from './StepOne';
 import StepTwo from './StepTwo';
+import StepThree from './StepThree';
 import './style.css';
 
 // ! MAKE THIS FORM MORE INTERACTIVE LIKE A DOJO SURVEY
@@ -28,6 +29,10 @@ const RoamForm = () => {
       case 2:
         return (
           <StepTwo onPrevious={handlePreviousStep} onNext={handleNextStep} />
+        );
+      case 3:
+        return (
+          <StepThree onPrevious={handlePreviousStep} onNext={handleNextStep} />
         );
       // Repeat for other steps
       default:

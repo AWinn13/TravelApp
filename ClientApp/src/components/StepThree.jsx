@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
-import { TextField, Grid, Typography, Button } from '@mui/material';
 import 'animate.css'
 
+import { TextField, Grid, Typography, Button } from '@mui/material';
 
-const StepOne = ({onNext}) => {
+const StepThree = ({ onNext, onPrevious }) => {
   const [exitAnimate, setExitAnimate] = useState(false);
   const handleNext = () => {
     setExitAnimate(true);
-    setTimeout(() => {
+     setTimeout(() => {
       onNext();
     }, 500);
   };
-    
+  const handlePrevious = () => onPrevious();
 
   return (
     <div className={exitAnimate ? 'animate__animated animate__slideOutLeft': 'animate__animated animate__slideInRight'}>
@@ -30,6 +30,9 @@ const StepOne = ({onNext}) => {
           />
         </Grid>
         <Grid item>
+          <Button variant='contained' color='success' onClick={handlePrevious}>
+            Previous
+          </Button>
           <Button variant='contained' color='success' onClick={handleNext}>
             {' '}
             Next{' '}
@@ -40,4 +43,4 @@ const StepOne = ({onNext}) => {
   );
 };
 
-export default StepOne;
+export default StepThree;

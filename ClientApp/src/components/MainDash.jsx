@@ -1,11 +1,25 @@
 import { Container, Box, Paper, Grid, Typography } from "@mui/material";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { themeOptions} from './ThemeComponent';
-
+import { Component, useState, useEffect } from 'react';
+import { useNavigate } from "react-router-dom"
 
 const Dashboard = () => {
     const theme = createTheme(themeOptions);
+    const [loggedUser, setLoggedUser] = useState(false)
+    const navigate = useNavigate("")
 
+    useEffect(() => {
+        const loggedInUser = localStorage.getItem("user");
+        if (loggedInUser) {
+            // const foundUser = JSON.parse(loggedInUser);
+            setLoggedUser(loggedInUser);
+
+        }
+        else {
+            navigate("/")
+        }
+    }, [loggedUser]);
     return (
         <ThemeProvider theme={theme}>
             <Grid container spacing={2} marginTop={2}>

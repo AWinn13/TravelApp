@@ -12,6 +12,7 @@ import {
     from '@mui/material';
 import { useState } from 'react';
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom';
 
 const RegForm = ({ open, handleClose, handleSetSignIn, loggedUser }) => {
     const [errors, setErrors] = useState([])
@@ -21,12 +22,9 @@ const RegForm = ({ open, handleClose, handleSetSignIn, loggedUser }) => {
         Password: '',
         PasswordConfirm: ''
     })
+    const navigate = useNavigate("")
     const onSubmitHandler = async(e) => {
         e.preventDefault();
-        // let pass = bcrypt.hash(newUser.Password, salt)
-        // let passC = bcrypt.hash(newUser.PasswordConfirm, salt)
-        // setNewUser({ ...newUser, Password: pass })
-        // let currentDT = new Date();
 
         axios.post('https://localhost:7096/api/user',
             { ...newUser},
@@ -39,8 +37,9 @@ const RegForm = ({ open, handleClose, handleSetSignIn, loggedUser }) => {
         )
             .then(res => {
                 console.log(res);
-                localStorage.setItem("user", res.data)
+                localStorage.setItem("user",JSON.stringify(res.data))
                 loggedUser(res.data)
+                navigate("/dashboard")
             })
             .catch(err =>
                 {

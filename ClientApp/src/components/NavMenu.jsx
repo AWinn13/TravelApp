@@ -15,43 +15,11 @@ import { themeOptions } from './ThemeComponent';
 import LoginForm from './LoginForm';
 import RegForm from './RegForm';
 
-function NavMenu() {
+function NavMenu({loggedUser, handleLoggedUser, handleClickOpen, signIn, open, handleClose, handleSetSignIn}) {
   const theme = createTheme(themeOptions);
 
-  const [loggedUser, setLoggedUser] = useState(false)
-  const [open, setOpen] = useState(false);
-  const [signIn, setSignIn] = useState(false);
-
-  useEffect(() => {
-    const loggedInUser = localStorage.getItem("user");
-    if (loggedInUser) {
-      // const foundUser = JSON.parse(loggedInUser);
-      setLoggedUser(loggedInUser);
-
-    }
-  }, [loggedUser]);
-
-  const handleLoggedUser = (res) => {
-    setLoggedUser(res)
-    handleClose();
-  }
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setSignIn(false);
-    setOpen(false);
-  };
-
-
-  const handleSetSignIn = () => {
-    setSignIn(!signIn);
-  }
-
   return (
-    <ThemeProvider theme={theme}>
+
       <AppBar position="static">
         <Container maxWidth="xl">
           <Toolbar disableGutters sx={{ display: "flex", justifyContent: "space-between" }}>
@@ -74,7 +42,7 @@ function NavMenu() {
           </Toolbar>
         </Container>
       </AppBar>
-    </ThemeProvider>
+
   );
 }
 export default NavMenu;

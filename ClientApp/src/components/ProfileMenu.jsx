@@ -4,8 +4,13 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Fade from '@mui/material/Fade';
 import Typography from '@mui/material/Typography';
+import Link from '@mui/material/Link';
+import { useNavigate } from 'react-router-dom';
+
+
 
 export default function ProfileMenu({ loggedUser }) {
+  const navigate = useNavigate("");
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -18,6 +23,7 @@ export default function ProfileMenu({ loggedUser }) {
     localStorage.clear();
     loggedUser(false);
     setAnchorEl(null);
+    navigate("/");
   }
 
   return (
@@ -43,7 +49,14 @@ export default function ProfileMenu({ loggedUser }) {
         TransitionComponent={Fade}
       >
         <MenuItem onClick={handleClose}>Profile</MenuItem>
-        <MenuItem onClick={handleClose}>Dashboard</MenuItem>
+        <Link href='/dashboard' color="inherit" underline='none' 
+        sx={{
+          ":hover": {
+            fontStyle: "none",
+            color: 'black'
+          }
+        }}
+        ><MenuItem onClick={handleClose}>Dashboard</MenuItem></Link>
         <MenuItem onClick={handleClose}>Upcoming Roam</MenuItem>
         <MenuItem onClick={handleClose}>Roams</MenuItem>
         <MenuItem onClick={handleCloseLogout}>Logout</MenuItem>

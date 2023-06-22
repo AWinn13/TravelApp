@@ -14,6 +14,7 @@ from '@mui/material';
 import { red } from '@mui/material/colors';
 import { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const LoginForm = ({open, handleClose, handleSetSignIn, loggedUser}) => {
     const [errors, setErrors] = useState("")
@@ -21,6 +22,7 @@ const LoginForm = ({open, handleClose, handleSetSignIn, loggedUser}) => {
         UserEmail: "",
         UserPassword:""
     })
+    const navigate = useNavigate("")
     const onSubmitHandler = async (e) => {
         e.preventDefault();
         axios.post("https://localhost:7096/api/user/authenticate",
@@ -33,9 +35,11 @@ const LoginForm = ({open, handleClose, handleSetSignIn, loggedUser}) => {
             }
         )
             .then(res => {
-                console.log(res);
-                localStorage.setItem("user", res.data)
+                console.log(res.data);
+                localStorage.setItem("user",JSON.stringify(res.data))
                 loggedUser(res.data)
+                navigate("/dashboard")
+
             })
             .catch(err => {
                 if (err.response) {

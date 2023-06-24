@@ -34,4 +34,17 @@ public class TripController : Controller
         IEnumerable<Trip> Trips = _context.Trips.Where(u => u.UserId == uId).OrderByDescending(t => t.StartDate).ToList();
         return Trips;
     }
+
+    [AllowAnonymous]
+    [HttpPost]
+    public async Task<ActionResult<Trip>> PostTrip([FromBody] Trip newTrip)
+    {
+        _context.Trips.Add(newTrip);
+        await _context.SaveChangesAsync();
+        return CreatedAtAction(
+            nameof(Trip),
+            new { id = newTrip.TripId},
+            newTrip
+        );
+    }
 }

@@ -13,5 +13,5 @@ public class Trip
     public string Description { get; set; }
     [ForeignKey("User")]
     public int UserId { get; set; }
-    public List<TripItem> Items { get; set; }
+    public List<TripItem> Items { get; set; } = new List<TripItem>();
 }

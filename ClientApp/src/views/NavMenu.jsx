@@ -7,13 +7,13 @@ import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import Popover from '@mui/material/Popover';
 import { Link } from '@mui/material';
-import ProfileMenu from './ProfileMenu';
+import ProfileMenu from '../components/ProfileMenu';
 
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { themeOptions } from './ThemeComponent';
+import { themeOptions } from '../components/ThemeComponent';
 
-import LoginForm from './LoginForm';
-import RegForm from './RegForm';
+import LoginForm from '../components/LoginForm';
+import RegForm from '../components/RegForm';
 
 function NavMenu({loggedUser, handleLoggedUser, handleClickOpen, signIn, open, handleClose, handleSetSignIn}) {
   const theme = createTheme(themeOptions);

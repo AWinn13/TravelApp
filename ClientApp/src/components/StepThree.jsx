@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 
 import { TextField, Grid, Typography, Button } from '@mui/material';
 
-const StepThree = ({ onNext, onPrevious, handleSetRoam, roam }) => {
+const StepThree = ({ onNext, onPrevious, handleSetRoam, roam, handleSubmit }) => {
   const [exitAnimate, setExitAnimate] = useState(false);
   const [error, setError] = useState(false)
   const handleNext = () => {
@@ -19,7 +19,7 @@ const StepThree = ({ onNext, onPrevious, handleSetRoam, roam }) => {
   const handlePrevious = () => onPrevious();
 
   return (
-    <div className={exitAnimate ? 'animate__animated animate__slideOutLeft': 'animate__animated animate__slideInRight'}>
+    <form onSubmit={handleSubmit} className={exitAnimate ? 'animate__animated animate__slideOutLeft': 'animate__animated animate__slideInRight'}>
       <Grid container direction='column' className='formContainer' rowGap={3}>
         <Grid item>
           <Typography variant='h3'>Where Are You Roaming?</Typography>
@@ -109,13 +109,13 @@ const StepThree = ({ onNext, onPrevious, handleSetRoam, roam }) => {
           <Button variant='contained' color='success' onClick={handlePrevious}>
             Previous
           </Button>
-          <Button variant='contained' color='success' onClick={handleNext}>
+          <Button variant='contained' color='success' onClick={handleNext} type='submit'>
             {' '}
             Next{' '}
           </Button>
         </Grid>
       </Grid>
-    </div>
+    </form>
   );
 };
 
